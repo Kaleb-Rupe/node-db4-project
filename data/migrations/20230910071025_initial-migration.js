@@ -1,7 +1,3 @@
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
 exports.up = async function (knex) {
   await knex.schema
     .createTable("recipes", (table) => {
@@ -48,32 +44,9 @@ exports.up = async function (knex) {
     });
 };
 
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
 exports.down = async function (knex) {
   await knex.schema
-    .dropTableIfExists("step_ingredients", (table) => {
-      table.increments("step_ingredient_id");
-      table.float("quantity").notNullable();
-      table
-        .integer("step_id")
-        .unsigned()
-        .notNullable()
-        .references("step_id")
-        .inTable("steps")
-        .onDelete("RESTRICT")
-        .onUpdate("RESTRICT");
-      table
-        .integer("ingredient_id")
-        .unsigned()
-        .notNullable()
-        .references("ingredient_id")
-        .inTable("ingredients")
-        .onDelete("RESTRICT")
-        .onUpdate("RESTRICT");
-    })
+    .dropTableIfExists("step_ingredients")
     .dropTableIfExists("steps")
     .dropTableIfExists("ingredients")
     .dropTableIfExists("recipes");
